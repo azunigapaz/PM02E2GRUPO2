@@ -9,9 +9,27 @@ using System.Threading.Tasks;
 
 namespace PM02E2GRUPO2.Controllers
 {
-    public class SitiosApiController
+    public static class SitiosApiController
     {
 
+        public async static Task<List<Sitios>> getSitios()
+        {
+            List<Sitios> listasitios = new List<Sitios>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync("https://webfacturacesar.000webhostapp.com/pm02exa/methods/sitios/index.php");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var Contenido = response.Content.ReadAsStringAsync().Result;
+
+                    listasitios = JsonConvert.DeserializeObject<List<Sitios>>(Contenido);
+                }
+            }
+
+            return listasitios;
+        }
 
 
     }
