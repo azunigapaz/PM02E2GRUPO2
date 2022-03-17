@@ -11,6 +11,11 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Plugin.AudioRecorder;
 using PM02E2GRUPO2.Views;
+using PM02E2GRUPO2.Models;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace PM02E2GRUPO2
 {
@@ -36,12 +41,7 @@ namespace PM02E2GRUPO2
             imgubicacionactual.Source = null;
         }
 
-        byte[] imageToSave;
-
-        private void btnguardarubicacion_Clicked(object sender, EventArgs e)
-        {
-
-        }
+        byte[] imageToSave, audioToSave;
 
         private async void btnlistviewubicaciones_Clicked(object sender, EventArgs e)
         {
@@ -105,8 +105,6 @@ namespace PM02E2GRUPO2
             {
                 throw ex;
             }
-
-
         }
 
         public async void obtenerCoordenadas()
@@ -162,6 +160,9 @@ namespace PM02E2GRUPO2
                 using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
                 {
                     stream.CopyTo(fileStream);
+                    audioToSave = null;
+                    MemoryStream memoryStream = new MemoryStream();
+                    audioToSave = memoryStream.ToArray();
                 }
 
                 await DisplayAlert("Alerta", fileName, "cancel");
@@ -171,7 +172,61 @@ namespace PM02E2GRUPO2
             }
 
         }
+        private async void btnguardarubicacion_Clicked(object sender, EventArgs e)
+        {
 
+            if (String.IsNullOrEmpty(descripcion_entry.Text))
+            {
+                await DisplayAlert("Campo Vacio", "Por favor, Ingrese una Descripcion de la Ubicacion ", "Ok");
+            }
+            else
+            {
+
+                //convertir la imagen a base64
+                string pathBase64Imagen = Convert.ToBase64String(imageToSave);
+
+                //extraer el path del audio
+                string audio = AudioPath;
+                //convertir a arreglo de bytes
+                byte[] fileByte = System.IO.File.ReadAllBytes(audio);
+                //convertir el audio a base64
+                string pathBase64Audio = Convert.ToBase64String(fileByte);
+
+                Sitios save = new Sitios
+                {
+                    Descripcion = descripcion_entry.Text,
+                    Longitud = longitud_entry.Text,
+                    Latitud = latitud_entry.Text,
+                    Foto = pathBase64Imagen,
+                    Audio = pathBase64Audio,
+                };
+
+                Uri RequestUri = new Uri("https://webfacturacesar.000webhostapp.com/pm02exa/methods/sitios/add.php");
+
+                var client = new HttpClient();
+                var json = JsonConvert.SerializeObject(save);
+                var contentJson = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(RequestUri, contentJson);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    String jsonx = response.Content.ReadAsStringAsync().Result;
+
+                    JObject jsons = JObject.Parse(jsonx);
+
+                    String Mensaje = jsons["msg"].ToString();
+
+                    await DisplayAlert("Success", "Datos guardados correctamente", "Ok");
+
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Estamos en mantenimiento", "Ok");
+                }
+
+            }
+
+        }
 
     }
 }

@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace PM02E2GRUPO2.Models
 {
-    class SitiosListModel
+    public class SitiosListModel
     {
-        public SitiosListModel(string Id, string Descripcion, string Latitud, string Longitud, ImageSource fotografia, string Foto, string Audio)
+        public SitiosListModel(string Id, string Descripcion, string Latitud, string Longitud, ImageSource fotografia, string Foto, string Audio, byte[] decodedStringAudio)
         {
             this.Id = Id;
             this.Descripcion = Descripcion;
@@ -16,6 +16,7 @@ namespace PM02E2GRUPO2.Models
             this.fotografia = fotografia;
             this.Foto = Foto;
             this.Audio = Audio;
+            this.decodedStringAudio = decodedStringAudio;
         }
 
         public string Id { get; set; }
@@ -25,6 +26,7 @@ namespace PM02E2GRUPO2.Models
         public ImageSource fotografia { get; set; }
         public string Foto { get; set; }
         public string Audio { get; set; }
+        public byte[] decodedStringAudio { get; set; }
 
     }
 }

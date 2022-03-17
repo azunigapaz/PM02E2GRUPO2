@@ -16,6 +16,7 @@ namespace PM02E2GRUPO2.Droid
             base.OnCreate(savedInstanceState);
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            Xamarians.MediaPlayer.Droid.VideoPlayerRenderer.Init(this);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }

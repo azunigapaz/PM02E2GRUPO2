@@ -15,6 +15,7 @@ using System.Net.Http;
 
 using Newtonsoft.Json;
 using System.IO;
+using Android.Util;
 
 namespace PM02E2GRUPO2.Views
 {
@@ -24,8 +25,8 @@ namespace PM02E2GRUPO2.Views
         List<Models.SitiosListModel> lista = new List<Models.SitiosListModel>();
         public ListViewPage()
         {
-            InitializeComponent();
-            ObtenerListaSitios();
+            InitializeComponent();            
+            GetSitiosList();
         }
 
         private void listview_ubicaciones_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -39,9 +40,25 @@ namespace PM02E2GRUPO2.Views
 
             if (AccesoInternet == NetworkAccess.Internet)
             {
-                List<Sitios> listapersonas = new List<Sitios>();
-                listapersonas = await SitiosApiController.getSitios();
-                lsSitios.ItemsSource = listapersonas;
+                sl.IsVisible = true;
+                spinner.IsRunning = true;
+
+                List<SitiosListModel> listapersonas = new List<SitiosListModel>();
+                listapersonas = await SitiosApiController.ControllerObtenerListaSitios();
+
+                if (listapersonas.Count > 0)
+                {
+                    lsSitios.ItemsSource = null;
+                    lsSitios.ItemsSource = listapersonas;
+                }
+                else
+                {
+                    await DisplayAlert("Notificación", $"Lista vacía, ingrese datos", "Ok");
+
+                }
+
+                sl.IsVisible = false;
+                spinner.IsRunning = false;
             }
         }
 
@@ -60,7 +77,6 @@ namespace PM02E2GRUPO2.Views
                     dynamic dyn = JsonConvert.DeserializeObject(contenido);
                     byte[] newBytes = null;
 
-
                     if (contenido.Length > 28)
                     {
 
@@ -70,13 +86,15 @@ namespace PM02E2GRUPO2.Views
                             newBytes = Convert.FromBase64String(img64);
                             var stream = new MemoryStream(newBytes);
 
+                            string audio64 = item.Audio.ToString();
+                            byte[] decodedString = Base64.Decode(audio64, Base64Flags.Default);
+
                             lista.Add(new Models.SitiosListModel(
                                             item.Id.ToString(), item.Descripcion.ToString(),
                                             item.Latitud.ToString(), item.Longitud.ToString(),
                                             ImageSource.FromStream(() => stream),
-                                            img64, img64
+                                            img64, audio64, decodedString
                                             ));
-
                         }
                     }
                     else
