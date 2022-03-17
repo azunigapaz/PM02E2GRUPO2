@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Plugin.AudioRecorder;
+using PM02E2GRUPO2.Views;
 
 namespace PM02E2GRUPO2
 {
@@ -42,9 +43,9 @@ namespace PM02E2GRUPO2
 
         }
 
-        private void btnlistviewubicaciones_Clicked(object sender, EventArgs e)
+        private async void btnlistviewubicaciones_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new ListViewPage());
         }
 
         private async void btngrabaraudio_Clicked(object sender, EventArgs e)
