@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM02E2GRUPO2.Views.ActualizarUbicacionPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <!-- Imagen Ubicacion -->
+                <Image x:Name="imgubicacionactualizada"
+                       HeightRequest="300"
+                       BackgroundColor="AliceBlue" 
+                       Margin="20,20,20,0"/>
+
+                <Button x:Name="btnactualizarphoto"
+                        Text="Tomar Photo"
+                        BackgroundColor="#9e9e9e"
+                        CornerRadius="10"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Margin="35,15,35,0"
+                        Clicked="btnactualizarphoto_Clicked" />
+
+                <!-- Longitud -->
+                <Entry x:Name="actualizarlongitud_entry"
+                       Placeholder="Longitud Actual"
+                       Margin="35,10,35,10"
+                       IsEnabled="False" />
+
+                <!-- Laitud -->
+                <Entry x:Name="actualizarlatitud_entry"
+                       Placeholder="Latitud Actual"
+                       Margin="35,0,35,10"
+                       IsEnabled="False" />
+
+                <!-- Descripcion -->
+                <Entry x:Name="actualizardescripcion_entry"
+                       Placeholder="Descripcion de la Ubicacion"
+                       Margin="35,0" />
+
+                <!-- Grabar Audio -->
+                <Button x:Name="btnactualizaraudio"
+                        Text="Grabar/Detener Audio"
+                        BackgroundColor="#9e9e9e"
+                        CornerRadius="10"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Margin="35,0" 
+                        Clicked="btnactualizaraudio_Clicked" />
+
+                <!-- Botones -->
+                <StackLayout Margin="0,10,0,50" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
+                    <Button x:Name="btnactualizarubicacion"
+                            Text="Actualizar"
+                            HeightRequest="50"
+                            WidthRequest="158"
+                            BackgroundColor="#4caf50"
+                            CornerRadius="10"
+                            FontSize="15"
+                            TextColor="#FFF"
+                            FontAttributes="Bold"
+                            Clicked="btnactualizarubicacion_Clicked" />
+
+                    <Button x:Name="btneliminarubicacion"
+                            Text="Eliminar"
+                            HeightRequest="50"
+                            WidthRequest="158"
+                            BackgroundColor="#f44336"
+                            CornerRadius="10"
+                            FontSize="15"
+                            TextColor="#FFF"
+                            FontAttributes="Bold"
+                            Clicked="btneliminarubicacion_Clicked" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

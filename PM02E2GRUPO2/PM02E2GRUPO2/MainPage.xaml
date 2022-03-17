@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM02E2GRUPO2.MainPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <StackLayout>
+            <Image Source="uthlogo.png" HeightRequest="200" WidthRequest="100" />
+            <Label Text="SITE VISITOR APP" FontSize="20" HorizontalOptions="Center"  Margin="0, 0, 0, 15" />
+            
+            <!-- Imagen Ubicacion -->
+            <Image x:Name="imgubicacionactual" 
+                   HeightRequest="300"
+                   BackgroundColor="AliceBlue" 
+                   Margin="20,0"/>
+
+            <Button x:Name="btntomarphoto"
+                    Text="Tomar Photo"
+                    BackgroundColor="#9e9e9e"
+                    CornerRadius="10"
+                    FontSize="15"
+                    TextColor="#FFF"
+                    FontAttributes="Bold"
+                    Margin="35,15,35,0"
+                    Clicked="btntomarphoto_Clicked" />
+
+            <!-- Longitud -->            
+            <Entry  x:Name="longitud_entry"
+                    Placeholder="Longitud Actual"
+                    Margin="35,10,35,10"
+                    IsEnabled="False" />
+
+            <!-- Laitud -->
+            <Entry x:Name="latitud_entry"
+                   Placeholder="Latitud Actual"
+                   Margin="35,0,35,10"
+                   IsEnabled="False" />
+
+            <!-- Descripcion -->
+            <Entry x:Name="descripcion_entry"
+                   Placeholder="Descripcion de la Ubicacion"
+                   Margin="35,0" />
+            
+            <!-- Grabar Audio -->
+            <Button x:Name="btngrabaraudio"
+                    Text="Grabar/Detener Audio"
+                    BackgroundColor="#9e9e9e"
+                    CornerRadius="10"
+                    FontSize="15"
+                    TextColor="#FFF"
+                    FontAttributes="Bold"
+                    Margin="35,0" 
+                    Clicked="btngrabaraudio_Clicked" />
+            
+            <!-- Botones -->
+            <StackLayout Margin="0,10,0,50" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
+                <Button x:Name="btnguardarubicacion"
+                        Text="Guardar"
+                        HeightRequest="50"
+                        WidthRequest="158"
+                        BackgroundColor="#4caf50"
+                        CornerRadius="10"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Clicked="btnguardarubicacion_Clicked" />
+                
+                <Button x:Name="btnlistviewubicaciones"
+                        Text="ListView"
+                        HeightRequest="50"
+                        WidthRequest="158"
+                        BackgroundColor="#2196f3"
+                        CornerRadius="10"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Clicked="btnlistviewubicaciones_Clicked" />
+            </StackLayout>
+
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
