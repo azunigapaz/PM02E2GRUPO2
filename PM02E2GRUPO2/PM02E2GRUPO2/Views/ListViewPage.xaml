@@ -36,19 +36,7 @@
 
 
             <!--Botones del Final-->
-            <StackLayout Margin="10,0,10,5" Orientation="Horizontal">
-                <Button x:Name="btnEliminar"
-                        Text="Eliminar" 
-                        HeightRequest="50"
-                        WidthRequest="120"
-                        CornerRadius="10"
-                        BackgroundColor="#f44336"
-                        FontSize="15"
-                        TextColor="#FFF"
-                        FontAttributes="Bold"
-                        Clicked="btnEliminar_Clicked" />
-
-
+            <StackLayout Margin="10,0,5,5" Orientation="Horizontal">
                 <Button x:Name="btnActualizar"
                         Text="Actualizar"
                         HeightRequest="50"
@@ -59,6 +47,17 @@
                         TextColor="#FFF"
                         FontAttributes="Bold"
                         Clicked="btnActualizar_Clicked" />
+
+                <Button x:Name="btnEliminar"
+                        Text="Eliminar" 
+                        HeightRequest="50"
+                        WidthRequest="120"
+                        CornerRadius="10"
+                        BackgroundColor="#f44336"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Clicked="btnEliminar_Clicked" />
 
                 <Button x:Name="btnVerMapa"
                         Text="Ver Mapa"
