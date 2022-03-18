@@ -30,6 +30,13 @@ namespace PM02E2GRUPO2.Views
         double dbLatitud, dbLongitud;
 
         List<Models.SitiosListModel> lista = new List<Models.SitiosListModel>();
+
+        Object objSitioGlobal = null;
+        string idGlobal = "";
+        string sitioGlobal = "";
+        string latitud = "";
+        string longitud = "";
+
         public ListViewPage()
         {
             InitializeComponent();            
@@ -127,10 +134,77 @@ namespace PM02E2GRUPO2.Views
             txtDescripcionSeleccionada = valores.Descripcion;
             dbLatitud = Convert.ToDouble(valores.Latitud);
             dbLongitud = Convert.ToDouble(valores.Longitud);
+
+            idGlobal = null;
+
+            idGlobal = valores.Id;
+            sitioGlobal = valores.Descripcion;
+            latitud = valores.Latitud;
+            longitud = valores.Longitud;
+
+            string audio64 = valores.Audio.ToString();
+            byte[] decodedString = Base64.Decode(audio64, Base64Flags.Default);
+
+            objSitioGlobal = new
+            {
+                id = valores.Id,
+                latitud = valores.Latitud,
+                longitud = valores.Longitud,
+                descripcion = valores.Descripcion,
+                imagen = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(valores.Foto))),
+                audio = decodedString
+            };
+
+
         }
 
-        private void btnEliminar_Clicked(object sender, EventArgs e)
+        private async void btnEliminar_Clicked(object sender, EventArgs e)
         {
+
+            if (!string.IsNullOrEmpty(idGlobal) || !string.IsNullOrEmpty(sitioGlobal))
+            {
+                bool res = await DisplayAlert("Notificación", $"¿Esta seguro de eliminar el sitio {sitioGlobal}?", "Sí", "Cancelar");
+
+                if (res)
+                {
+
+                    object sitio = new
+                    {
+                        Id = idGlobal
+                    };
+
+                    Uri RequestUri = new Uri("https://webfacturacesar.000webhostapp.com/pm02exa/methods/sitios/del.php");
+                    var client = new HttpClient();
+                    var json = JsonConvert.SerializeObject(sitio);
+
+                    HttpRequestMessage request = new HttpRequestMessage
+                    {
+                        Content = new StringContent(json, Encoding.UTF8, "application/json"),
+                        Method = HttpMethod.Post,
+                        RequestUri = RequestUri
+                    };
+
+                    HttpResponseMessage response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await DisplayAlert("Notificación", $"Registro eliminado con éxito", "Ok");
+                        lista.Clear();
+                        GetSitiosList();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Notificación", $"Ha ocurrido un error", "Ok");
+
+                    }
+
+                }
+            }
+            else
+            {
+                await DisplayAlert("Notificación", $"Por favor, seleccione un registro", "Ok");
+
+            }
 
         }
 
