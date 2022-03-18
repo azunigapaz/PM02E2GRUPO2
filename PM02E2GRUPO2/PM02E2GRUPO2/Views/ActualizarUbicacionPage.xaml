@@ -68,7 +68,7 @@
                             Clicked="btnactualizarubicacion_Clicked" />
 
                     <Button x:Name="btneliminarubicacion"
-                            Text="Eliminar"
+                            Text="Cancelar"
                             HeightRequest="50"
                             WidthRequest="158"
                             BackgroundColor="#f44336"

@@ -164,9 +164,9 @@ namespace PM02E2GRUPO2.Views
             }
         }
 
-        private void btneliminarubicacion_Clicked(object sender, EventArgs e)
+        private async void btneliminarubicacion_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PopAsync();
         }
 
         public async void obtenerCoordenadas()
