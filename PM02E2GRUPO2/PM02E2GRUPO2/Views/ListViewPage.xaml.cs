@@ -39,7 +39,8 @@ namespace PM02E2GRUPO2.Views
 
         public ListViewPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            lista.Clear();
             GetSitiosList();
         }
 
@@ -208,9 +209,18 @@ namespace PM02E2GRUPO2.Views
 
         }
 
-        private void btnActualizar_Clicked(object sender, EventArgs e)
+        private async void btnActualizar_Clicked(object sender, EventArgs e)
         {
-
+            if (objSitioGlobal != null)
+            {
+                var detalle = new ActualizarUbicacionPage();
+                detalle.BindingContext = objSitioGlobal;
+                await Navigation.PushAsync(detalle);
+            }
+            else
+            {
+                await DisplayAlert("Notificación", $"Por favor, seleccione un registro", "Ok");
+            }
         }
 
         private async void btnVerMapa_Clicked(object sender, EventArgs e)

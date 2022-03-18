@@ -5,8 +5,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
+                <Entry x:Name="idSitio" Text="{Binding id}" IsVisible="false"></Entry>
                 <!-- Imagen Ubicacion -->
                 <Image x:Name="imgubicacionactualizada"
+                       Source="{Binding imagen}"
                        HeightRequest="300"
                        BackgroundColor="AliceBlue" 
                        Margin="20,20,20,0"/>
@@ -24,18 +26,21 @@
                 <!-- Longitud -->
                 <Entry x:Name="actualizarlongitud_entry"
                        Placeholder="Longitud Actual"
+                       Text="{Binding longitud}"
                        Margin="35,10,35,10"
                        IsEnabled="False" />
 
                 <!-- Laitud -->
                 <Entry x:Name="actualizarlatitud_entry"
                        Placeholder="Latitud Actual"
+                       Text="{Binding latitud}"
                        Margin="35,0,35,10"
                        IsEnabled="False" />
 
                 <!-- Descripcion -->
                 <Entry x:Name="actualizardescripcion_entry"
                        Placeholder="Descripcion de la Ubicacion"
+                       Text="{Binding descripcion}"
                        Margin="35,0" />
 
                 <!-- Grabar Audio -->
