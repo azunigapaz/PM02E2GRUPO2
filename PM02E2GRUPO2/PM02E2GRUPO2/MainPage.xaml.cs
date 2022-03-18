@@ -142,6 +142,11 @@ namespace PM02E2GRUPO2
             }
         }
 
+        private void btnsalirapp_Clicked(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }
+
         private async void getRecord()
         {
 

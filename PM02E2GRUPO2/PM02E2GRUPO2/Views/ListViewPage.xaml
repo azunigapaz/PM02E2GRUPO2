@@ -12,9 +12,6 @@
 
                 <ActivityIndicator IsRunning="false" x:Name="spinner" VerticalOptions="Center"
                            HorizontalOptions="Center" HeightRequest="80" WidthRequest="80"/>
-
-
-
             </AbsoluteLayout>
 
             <ListView x:Name="lsSitios" HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand"
@@ -23,12 +20,13 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="5" VerticalOptions="FillAndExpand"
-                            MinimumHeightRequest="100">
-
-                                <Image Source="{Binding fotografia}" WidthRequest="70" HeightRequest="70"/>
+                            <StackLayout Orientation="Horizontal" Padding="10" VerticalOptions="FillAndExpand"
+                            MinimumHeightRequest="120">
+                                <Image Source="{Binding fotografia}" WidthRequest="100" HeightRequest="70"/>
                                 <StackLayout Orientation="Vertical" Padding="2" VerticalOptions="Center">
                                     <Label Text="{Binding Descripcion}" FontSize="20" Margin="2" TextColor="Black" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Longitud}" FontSize="14" Margin="2" TextColor="Black" />
+                                    <Label Text="{Binding Latitud}" FontSize="14" Margin="2" TextColor="Black" />
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>
@@ -38,36 +36,51 @@
 
 
             <!--Botones del Final-->
-            <StackLayout Margin="50,0,10,30"
-                            Orientation="Horizontal">
-
+            <StackLayout Margin="10,0,10,5" Orientation="Horizontal">
                 <Button x:Name="btnEliminar"
-                    
-                    HeightRequest="50"
-                    CornerRadius="10"
-                    BackgroundColor="BurlyWood"
-                    Text="Eliminar" 
-                    Clicked="btnEliminar_Clicked"/>
+                        Text="Eliminar" 
+                        HeightRequest="50"
+                        WidthRequest="120"
+                        CornerRadius="10"
+                        BackgroundColor="#f44336"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Clicked="btnEliminar_Clicked" />
 
 
                 <Button x:Name="btnActualizar"
-                    
-                    HeightRequest="50"
-                    CornerRadius="10"
-                    BackgroundColor="BurlyWood"
-                    Text="Actualizar" 
-                    Clicked="btnActualizar_Clicked"/>
+                        Text="Actualizar"
+                        HeightRequest="50"
+                        WidthRequest="120"
+                        CornerRadius="10"
+                        BackgroundColor="#26a69a"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Clicked="btnActualizar_Clicked" />
 
                 <Button x:Name="btnVerMapa"
-                        
-                        HeightRequest="50"
-                        CornerRadius="10"
-                        BackgroundColor="BurlyWood"
                         Text="Ver Mapa"
-                        Clicked="btnVerMapa_Clicked"
-                    />
-
+                        HeightRequest="50"
+                        WidthRequest="120"
+                        CornerRadius="10"
+                        BackgroundColor="#2196f3"
+                        FontSize="15"
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        Clicked="btnVerMapa_Clicked" />
             </StackLayout>
+            
+            <Button x:Name="btnescucharaudio"
+                    Text="Reproducir Audio"
+                    CornerRadius="10"
+                    BackgroundColor="#ef6c00"
+                    FontSize="15"
+                    TextColor="#FFF"
+                    FontAttributes="Bold"
+                    Margin="10,0,10,30"
+                    Clicked="btnescucharaudio_Clicked" />
 
         </StackLayout>
     </ContentPage.Content>
