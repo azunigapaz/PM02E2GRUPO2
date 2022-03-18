@@ -179,58 +179,70 @@ namespace PM02E2GRUPO2
         }
         private async void btnguardarubicacion_Clicked(object sender, EventArgs e)
         {
-
-            if (String.IsNullOrEmpty(descripcion_entry.Text))
-            {
-                await DisplayAlert("Campo Vacio", "Por favor, Ingrese una Descripcion de la Ubicacion ", "Ok");
-            }
-            else
+            try
             {
 
-                //convertir la imagen a base64
-                string pathBase64Imagen = Convert.ToBase64String(imageToSave);
-
-                //extraer el path del audio
-                string audio = AudioPath;
-                //convertir a arreglo de bytes
-                byte[] fileByte = System.IO.File.ReadAllBytes(audio);
-                //convertir el audio a base64
-                string pathBase64Audio = Convert.ToBase64String(fileByte);
-
-                Sitios save = new Sitios
+                if (String.IsNullOrEmpty(descripcion_entry.Text))
                 {
-                    Descripcion = descripcion_entry.Text,
-                    Longitud = longitud_entry.Text,
-                    Latitud = latitud_entry.Text,
-                    Foto = pathBase64Imagen,
-                    Audio = pathBase64Audio,
-                };
-
-                Uri RequestUri = new Uri("https://webfacturacesar.000webhostapp.com/pm02exa/methods/sitios/add.php");
-
-                var client = new HttpClient();
-                var json = JsonConvert.SerializeObject(save);
-                var contentJson = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(RequestUri, contentJson);
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    String jsonx = response.Content.ReadAsStringAsync().Result;
-
-                    JObject jsons = JObject.Parse(jsonx);
-
-                    String Mensaje = jsons["msg"].ToString();
-
-                    await DisplayAlert("Success", "Datos guardados correctamente", "Ok");
-
+                    await DisplayAlert("Campo Vacio", "Por favor, Ingrese una Descripcion de la Ubicacion ", "Ok");
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Estamos en mantenimiento", "Ok");
+
+                    //convertir la imagen a base64
+                    string pathBase64Imagen = Convert.ToBase64String(imageToSave);
+
+                    //extraer el path del audio
+                    string audio = AudioPath;
+                    //convertir a arreglo de bytes
+                    byte[] fileByte = System.IO.File.ReadAllBytes(audio);
+                    //convertir el audio a base64
+                    string pathBase64Audio = Convert.ToBase64String(fileByte);
+
+                    Sitios save = new Sitios
+                    {
+                        Descripcion = descripcion_entry.Text,
+                        Longitud = longitud_entry.Text,
+                        Latitud = latitud_entry.Text,
+                        Foto = pathBase64Imagen,
+                        Audio = pathBase64Audio,
+                    };
+
+                    Uri RequestUri = new Uri("https://webfacturacesar.000webhostapp.com/pm02exa/methods/sitios/add.php");
+
+                    var client = new HttpClient();
+                    var json = JsonConvert.SerializeObject(save);
+                    var contentJson = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync(RequestUri, contentJson);
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        String jsonx = response.Content.ReadAsStringAsync().Result;
+
+                        JObject jsons = JObject.Parse(jsonx);
+
+                        String Mensaje = jsons["msg"].ToString();
+
+                        await DisplayAlert("Success", "Datos guardados correctamente", "Ok");
+
+                        descripcion_entry.Text = "";
+                        imageToSave = null;
+                        audioToSave = null;
+                        imgubicacionactual.Source = null;
+
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Estamos en mantenimiento", "Ok");
+                    }
+
                 }
 
             }
-
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "Ok");
+            }
         }
 
     }
