@@ -25,9 +25,7 @@ namespace PM02E2GRUPO2.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ActualizarUbicacionPage : ContentPage
     {
-
         public string AudioPath, fileName;
-
         private readonly AudioRecorderService audioRecorderService = new AudioRecorderService
         {
             StopRecordingOnSilence = true, //will stop recording after 2 seconds (default)
@@ -36,18 +34,15 @@ namespace PM02E2GRUPO2.Views
         };
 
         private readonly AudioPlayer audioPlayer = new AudioPlayer();
-
         public ActualizarUbicacionPage()
         {
             InitializeComponent();
             obtenerCoordenadas();
             actualizardescripcion_entry.Text = "";
             imgubicacionactualizada.Source = null;
-
         }
 
         byte[] imageToSave, audioToSave;
-
         private async void btnactualizarphoto_Clicked(object sender, EventArgs e)
         {
             try
@@ -204,20 +199,12 @@ namespace PM02E2GRUPO2.Views
             }
         }
 
-
         private async void getRecord()
-        {
-
-            //var audioFile = await recorder;
-            if (audioRecorderService.FilePath != null) //non-null audioFile indicates audio was successfully recorded
+        {            
+            if (audioRecorderService.FilePath != null) 
             {
-                //do something with the file
-                //var path = audioRecorderService.FilePath;
-                //await CrossMediaManager.Current.Play("file://" + path);
-
                 var stream = audioRecorderService.GetAudioFileStream();
 
-                //string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DateTime.Now.ToString("dd_MM_yyyy_mm_ss") + "_sample.wav");
                 fileName = Path.Combine(FileSystem.CacheDirectory, DateTime.Now.ToString("ddMMyyyymmss") + "_VoiceNote.wav");
 
                 using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))

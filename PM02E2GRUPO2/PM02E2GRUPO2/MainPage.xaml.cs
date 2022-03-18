@@ -22,9 +22,7 @@ namespace PM02E2GRUPO2
 {
     public partial class MainPage : ContentPage
     {
-
         public string AudioPath, fileName;
-
         private readonly AudioRecorderService audioRecorderService = new AudioRecorderService
         {
             StopRecordingOnSilence = true, //will stop recording after 2 seconds (default)
@@ -33,7 +31,6 @@ namespace PM02E2GRUPO2
         };
 
         private readonly AudioPlayer audioPlayer = new AudioPlayer();
-
         public MainPage()
         {
             InitializeComponent();
@@ -51,7 +48,6 @@ namespace PM02E2GRUPO2
 
         private async void btngrabaraudio_Clicked(object sender, EventArgs e)
         {
-
             var status = await Permissions.RequestAsync<Permissions.Microphone>();
 
             if (status != PermissionStatus.Granted)
@@ -60,8 +56,6 @@ namespace PM02E2GRUPO2
             if (audioRecorderService.IsRecording)
             {
                 await audioRecorderService.StopRecording();
-                //audioPlayer.Play(audioRecorderService.GetAudioFilePath());
-                //await DisplayAlert("Alerta", audioRecorderService.TotalAudioTimeout.ToString(), "cancel");
                 getRecord();
             }
             else
@@ -73,11 +67,8 @@ namespace PM02E2GRUPO2
 
         private async void btntomarphoto_Clicked(object sender, EventArgs e)
         {
-
             try
             {
-                //Code to execute on tapped event
-
                 var takepic = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     Directory = "PhotoApp",
@@ -99,7 +90,6 @@ namespace PM02E2GRUPO2
                     imgubicacionactual.Source = ImageSource.FromStream(() => { return takepic.GetStream(); });
                 }
 
-                //await DisplayAlert("Aviso", "Ha dado click en la imagen ", "Ok");
                 obtenerCoordenadas();
                 descripcion_entry.Focus();
             }
@@ -114,11 +104,8 @@ namespace PM02E2GRUPO2
             try
             {
                 var georequest = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
-
                 var tokendecancelacion = new CancellationTokenSource();
-
                 var localizacion = await Geolocation.GetLocationAsync(georequest, tokendecancelacion.Token);
-
 
                 if (localizacion != null)
                 {
@@ -150,18 +137,11 @@ namespace PM02E2GRUPO2
         }
 
         private async void getRecord()
-        {
-
-            //var audioFile = await recorder;
-            if (audioRecorderService.FilePath != null) //non-null audioFile indicates audio was successfully recorded
+        {         
+            if (audioRecorderService.FilePath != null) 
             {
-                //do something with the file
-                //var path = audioRecorderService.FilePath;
-                //await CrossMediaManager.Current.Play("file://" + path);
-
                 var stream = audioRecorderService.GetAudioFileStream();
 
-                //string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DateTime.Now.ToString("dd_MM_yyyy_mm_ss") + "_sample.wav");
                 fileName = Path.Combine(FileSystem.CacheDirectory, DateTime.Now.ToString("ddMMyyyymmss") + "_VoiceNote.wav");
 
                 using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
@@ -183,14 +163,12 @@ namespace PM02E2GRUPO2
         {
             try
             {
-
                 if (String.IsNullOrEmpty(descripcion_entry.Text))
                 {
                     await DisplayAlert("Campo Vacio", "Por favor, Ingrese una Descripcion de la Ubicacion ", "Ok");
                 }
                 else
                 {
-
                     //convertir la imagen a base64
                     string pathBase64Imagen = Convert.ToBase64String(imageToSave);
 

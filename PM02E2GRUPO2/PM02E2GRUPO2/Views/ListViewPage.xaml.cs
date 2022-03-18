@@ -17,14 +17,18 @@ using Newtonsoft.Json;
 using System.IO;
 using Android.Util;
 using Plugin.AudioRecorder;
+using MediaManager;
+using Android.Media;
+using Stream = Android.Media.Stream;
 
 namespace PM02E2GRUPO2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListViewPage : ContentPage
-    {
-
+    {        
         private readonly AudioPlayer audioPlayer = new AudioPlayer();
+
+        private readonly MediaPlayer mediaPlayer = new MediaPlayer();
 
         string txtDescripcionSeleccionada;
         double dbLatitud, dbLongitud;
@@ -37,6 +41,9 @@ namespace PM02E2GRUPO2.Views
         string latitud = "";
         string longitud = "";
 
+        string audio64 = null;
+        byte[] decodedString = null;
+
         public ListViewPage()
         {
             InitializeComponent();
@@ -46,7 +53,6 @@ namespace PM02E2GRUPO2.Views
 
         private void listview_ubicaciones_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-
         }
 
         private async void GetSitiosList()
@@ -69,7 +75,6 @@ namespace PM02E2GRUPO2.Views
                 else
                 {
                     await DisplayAlert("Notificación", $"Lista vacía, ingrese datos", "Ok");
-
                 }
 
                 sl.IsVisible = false;
@@ -115,18 +120,15 @@ namespace PM02E2GRUPO2.Views
                     else
                     {
                         await DisplayAlert("Notificación", $"Lista vacía, ingrese datos", "Ok");
-
                     }
 
                     lsSitios.ItemsSource = null;
-
                     lsSitios.ItemsSource = lista;
                 }
             }
 
             sl.IsVisible = false;
             spinner.IsRunning = false;
-
         }
 
         private void lsSitios_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -137,14 +139,13 @@ namespace PM02E2GRUPO2.Views
             dbLongitud = Convert.ToDouble(valores.Longitud);
 
             idGlobal = null;
-
             idGlobal = valores.Id;
             sitioGlobal = valores.Descripcion;
             latitud = valores.Latitud;
             longitud = valores.Longitud;
 
-            string audio64 = valores.Audio.ToString();
-            byte[] decodedString = Base64.Decode(audio64, Base64Flags.Default);
+            audio64 = valores.Audio.ToString();
+            decodedString = Base64.Decode(audio64, Base64Flags.Default);
 
             objSitioGlobal = new
             {
@@ -155,20 +156,15 @@ namespace PM02E2GRUPO2.Views
                 imagen = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(valores.Foto))),
                 audio = decodedString
             };
-
-
         }
 
         private async void btnEliminar_Clicked(object sender, EventArgs e)
         {
-
             if (!string.IsNullOrEmpty(idGlobal) || !string.IsNullOrEmpty(sitioGlobal))
             {
                 bool res = await DisplayAlert("Notificación", $"¿Esta seguro de eliminar el sitio {sitioGlobal}?", "Sí", "Cancelar");
-
                 if (res)
                 {
-
                     object sitio = new
                     {
                         Id = idGlobal
@@ -180,7 +176,7 @@ namespace PM02E2GRUPO2.Views
 
                     HttpRequestMessage request = new HttpRequestMessage
                     {
-                        Content = new StringContent(json, Encoding.UTF8, "application/json"),
+                        Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json"),
                         Method = HttpMethod.Post,
                         RequestUri = RequestUri
                     };
@@ -196,17 +192,13 @@ namespace PM02E2GRUPO2.Views
                     else
                     {
                         await DisplayAlert("Notificación", $"Ha ocurrido un error", "Ok");
-
                     }
-
                 }
             }
             else
             {
                 await DisplayAlert("Notificación", $"Por favor, seleccione un registro", "Ok");
-
             }
-
         }
 
         private async void btnActualizar_Clicked(object sender, EventArgs e)
@@ -234,15 +226,44 @@ namespace PM02E2GRUPO2.Views
                 var openXamarinMap = new MapaPage("Ubicacion", txtDescripcionSeleccionada, dbLongitud, dbLatitud);
                 await Navigation.PushAsync(openXamarinMap);
             }
-
         }
 
-        private void btnescucharaudio_Clicked(object sender, EventArgs e)
-        {
-            Models.Sitios item = new Models.Sitios();
+        private async void btnescucharaudio_Clicked(object sender, EventArgs e)
+        {            
+            if (objSitioGlobal != null)
+            {
+                try
+                {
+                    PlayAudioTrack(decodedString);
+                }
+                catch(Exception ex)
+                {
+                }                
+            }
+            else
+            {
+                await DisplayAlert("Notificación", $"Por favor, seleccione un registro", "Ok");
+            }
+        }
 
-            var uri = item.Audio;
-            audioPlayer.Play(uri);
+        void PlayAudioTrack(byte[] audioBuffer)
+        {
+            AudioTrack audioTrack = new AudioTrack(
+              // Stream type
+              Stream.Music,
+              // Frequency
+              24000,
+              // Mono or stereo
+              ChannelOut.Stereo,
+              // Audio encoding
+              Android.Media.Encoding.Pcm16bit,
+              // Length of the audio clip.
+              audioBuffer.Length,
+              // Mode. Stream or static.
+              AudioTrackMode.Stream);
+
+            audioTrack.Play();
+            audioTrack.Write(audioBuffer, 0, audioBuffer.Length);
         }
     }
 }
