@@ -16,12 +16,19 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.IO;
 using Android.Util;
+using Plugin.AudioRecorder;
 
 namespace PM02E2GRUPO2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListViewPage : ContentPage
     {
+
+        private readonly AudioPlayer audioPlayer = new AudioPlayer();
+
+        string txtDescripcionSeleccionada;
+        double dbLatitud, dbLongitud;
+
         List<Models.SitiosListModel> lista = new List<Models.SitiosListModel>();
         public ListViewPage()
         {
@@ -115,8 +122,11 @@ namespace PM02E2GRUPO2.Views
         }
 
         private void lsSitios_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-
+        {        
+            var valores = e.SelectedItem as SitiosListModel;
+            txtDescripcionSeleccionada = valores.Descripcion;
+            dbLatitud = Convert.ToDouble(valores.Latitud);
+            dbLongitud = Convert.ToDouble(valores.Longitud);
         }
 
         private void btnEliminar_Clicked(object sender, EventArgs e)
@@ -129,9 +139,26 @@ namespace PM02E2GRUPO2.Views
 
         }
 
-        private void btnVerMapa_Clicked(object sender, EventArgs e)
+        private async void btnVerMapa_Clicked(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(txtDescripcionSeleccionada))
+            {
+                await DisplayAlert("Mensaje", "Debe seleccionar ubicación.", "OK");
+            }
+            else
+            {
+                var openXamarinMap = new MapaPage("Ubicacion", txtDescripcionSeleccionada, dbLongitud, dbLatitud);
+                await Navigation.PushAsync(openXamarinMap);
+            }
 
+        }
+
+        private void btnescucharaudio_Clicked(object sender, EventArgs e)
+        {
+            Models.Sitios item = new Models.Sitios();
+
+            var uri = item.Audio;
+            audioPlayer.Play(uri);
         }
     }
 }

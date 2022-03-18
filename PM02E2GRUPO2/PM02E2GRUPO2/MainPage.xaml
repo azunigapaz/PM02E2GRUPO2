@@ -54,7 +54,7 @@
                     Clicked="btngrabaraudio_Clicked" />
             
             <!-- Botones -->
-            <StackLayout Margin="0,10,0,50" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
+            <StackLayout Margin="0,10,0,0" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
                 <Button x:Name="btnguardarubicacion"
                         Text="Guardar"
                         HeightRequest="50"
@@ -78,7 +78,16 @@
                         Clicked="btnlistviewubicaciones_Clicked" />
             </StackLayout>
 
-            
+            <Button x:Name="btnsalirapp"
+                    Text="Salir" 
+                    BackgroundColor="#f44336"
+                    CornerRadius="10"
+                    FontSize="15"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Margin="33.5,10,33.5,50"
+                    Clicked="btnsalirapp_Clicked" />
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
