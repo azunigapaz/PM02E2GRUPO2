@@ -16,6 +16,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Plugin.Media.Abstractions;
 
 namespace PM02E2GRUPO2
 {
@@ -81,7 +82,8 @@ namespace PM02E2GRUPO2
                 {
                     Directory = "PhotoApp",
                     Name = DateTime.Now.ToString() + "_Pic.jpg",
-                    SaveToAlbum = true
+                    SaveToAlbum = true,
+                    CompressionQuality = 40
                 });
 
                 await DisplayAlert("Ubicacion de la foto: ", takepic.Path, "Ok");
@@ -201,6 +203,7 @@ namespace PM02E2GRUPO2
 
                     Sitios save = new Sitios
                     {
+                        Id = "",
                         Descripcion = descripcion_entry.Text,
                         Longitud = longitud_entry.Text,
                         Latitud = latitud_entry.Text,

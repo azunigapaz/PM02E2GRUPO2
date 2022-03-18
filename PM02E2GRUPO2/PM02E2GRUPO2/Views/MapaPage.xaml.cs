@@ -28,7 +28,9 @@ namespace PM02E2GRUPO2.Views
 
         private async void btnRuta_Clicked(object sender, EventArgs e)
         {
-            var options = new MapLaunchOptions { NavigationMode = NavigationMode.Driving };            var location = new Location(mapLatitud, mapLongitud);            await Xamarin.Essentials.Map.OpenAsync(location, options);
+            var options = new MapLaunchOptions { NavigationMode = NavigationMode.Driving };
+            var location = new Location(mapLatitud, mapLongitud);
+            await Xamarin.Essentials.Map.OpenAsync(location, options);
         }
 
         protected async override void OnAppearing()
