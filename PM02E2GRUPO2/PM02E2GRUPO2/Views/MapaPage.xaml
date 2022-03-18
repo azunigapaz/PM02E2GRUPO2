@@ -8,7 +8,8 @@
             <maps:Map x:Name="mpsitios" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                       IsShowingUser="True" />
 
-            <Button x:Name="btnRuta"                    Margin="15,0"                    Text="Obtener Ruta"                     BackgroundColor="DeepSkyBlue"                    TextColor="White"                    Clicked="btnRuta_Clicked" />
+            <Button x:Name="btnRuta"                    Text="Obtener Ruta"                     CornerRadius="10"
+                    FontSize="15"                    BackgroundColor="DeepSkyBlue"                    TextColor="White"                    FontAttributes="Bold"                    Margin="15,0,15,6"                    Clicked="btnRuta_Clicked" />
 
         </StackLayout>
     </ContentPage.Content>

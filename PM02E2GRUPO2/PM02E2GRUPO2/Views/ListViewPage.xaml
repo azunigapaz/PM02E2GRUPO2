@@ -36,11 +36,11 @@
 
 
             <!--Botones del Final-->
-            <StackLayout Margin="10,0,5,5" Orientation="Horizontal">
+            <StackLayout Margin="0,0,0,0" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Button x:Name="btnActualizar"
                         Text="Actualizar"
                         HeightRequest="50"
-                        WidthRequest="120"
+                        WidthRequest="158"
                         CornerRadius="10"
                         BackgroundColor="#26a69a"
                         FontSize="15"
@@ -51,25 +51,24 @@
                 <Button x:Name="btnEliminar"
                         Text="Eliminar" 
                         HeightRequest="50"
-                        WidthRequest="120"
+                        WidthRequest="158"
                         CornerRadius="10"
                         BackgroundColor="#f44336"
                         FontSize="15"
                         TextColor="#FFF"
                         FontAttributes="Bold"
                         Clicked="btnEliminar_Clicked" />
-
-                <Button x:Name="btnVerMapa"
-                        Text="Ver Mapa"
-                        HeightRequest="50"
-                        WidthRequest="120"
-                        CornerRadius="10"
-                        BackgroundColor="#2196f3"
-                        FontSize="15"
-                        TextColor="#FFF"
-                        FontAttributes="Bold"
-                        Clicked="btnVerMapa_Clicked" />
             </StackLayout>
+            
+            <Button x:Name="btnVerMapa"
+                    Text="Ver Mapa"
+                    CornerRadius="10"
+                    BackgroundColor="#2196f3"
+                    FontSize="15"
+                    TextColor="#FFF"
+                    FontAttributes="Bold"
+                    Margin="33.5,5,33.5,0"
+                    Clicked="btnVerMapa_Clicked" />
             
             <Button x:Name="btnescucharaudio"
                     Text="Reproducir Audio"
@@ -78,7 +77,7 @@
                     FontSize="15"
                     TextColor="#FFF"
                     FontAttributes="Bold"
-                    Margin="10,0,10,30"
+                    Margin="33.5,5,33.5,20"
                     Clicked="btnescucharaudio_Clicked" />
 
         </StackLayout>
